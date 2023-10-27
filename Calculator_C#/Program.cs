@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,68 +13,10 @@ namespace Calculator_C_
 {
     class Program
     {
-        static void Calculator ()
-        {
-            while (true)
-            {
-                Console.WriteLine("Console Calculator");
-                Console.WriteLine("enter your first number : ");
-                double chislo1 = Convert.ToDouble(Console.ReadLine());
-
-                Console.WriteLine("Enter Maths symbol (+, -, *, /):");
-                char symbol = Convert.ToChar(Console.ReadLine());
-
-                Console.WriteLine("enter your first number:");
-                double chislo2 = Convert.ToDouble(Console.ReadLine());
-
-                double result = 0;
-
-                switch (symbol)
-                {
-                    case '+':
-                        result = chislo1 + chislo2;
-                        break;
-                    case '-':
-                        result = chislo1 - chislo2;
-                        break;
-                    case '*':
-                        result = chislo1 * chislo2;
-                        break;
-                    case '/':
-                        if (chislo2 != 0)
-                        {
-                            result = chislo1 / chislo2;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Dividing zero is not allow.");
-                            continue;
-                        }
-                        break;
-                    default:
-                        Console.WriteLine("Error.");
-                        continue;
-                }
-
-                Console.WriteLine("Result = " + result);
-
-                Console.WriteLine("Do you want to continue calculations? (y/n)");
-                string keyInput = Console.ReadLine();
-                if (keyInput.ToLower() != "y")
-                {
-                    break;
-                }
-            }
-        }
+       
         static void Main(string[] args)
         {
-            //Написать калькулятор, который принимает выражение вида 2 + 3, и выводит результат этого выражения:
 
-            Calculator(); //realize our calcuator using Function
-
-
-
-            //Below are different method of realizing ConsoleKey with Console shooter (Switch method)
 #if CHARACTER
             char key;
 
@@ -112,8 +55,7 @@ namespace Calculator_C_
                     case ConsoleKey.C: Console.Clear(); break;
                     case ConsoleKey.W:
                     case ConsoleKey.UpArrow:
-                        Console.WriteLine("Forward"); break;
-                        Console.SetCursorPosition(30, 0);
+                    Console.WriteLine("Forward"); break;
                     case ConsoleKey.S: case ConsoleKey.DownArrow: Console.WriteLine("Backward"); break;
                     case ConsoleKey.A: case ConsoleKey.LeftArrow: Console.WriteLine("leftside"); break;
                     case ConsoleKey.D: case ConsoleKey.RightArrow: Console.WriteLine("Rightside"); break;
@@ -126,6 +68,53 @@ namespace Calculator_C_
 
             } while (key != ConsoleKey.Escape); 
 #endif //CONSOLEKEY_CHARACTER
+            //Console.WriteLine($"Window size : {Console.WindowWidth} x{Console.WindowHeight}");
+            // Console.WriteLine($"Window size : {Console.BufferWidth} x{Console.BufferHeight}");
+
+            Random rnd = new Random(0);
+            int x = rnd.Next(Console.WindowWidth - 1);
+            int y = rnd.Next(Console.WindowHeight - 1);
+           
+
+            ConsoleKey key;
+            do
+            {
+               
+                Console.Clear();
+                Console.WriteLine($"Location : {x}x{y}");
+                Console.SetCursorPosition(x, y);
+                Console.BackgroundColor = ConsoleColor.Blue;
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("+");
+                Console.ResetColor();
+                key = Console.ReadKey(true).Key; //reading coordinate
+                switch (key)
+                {
+                    case ConsoleKey.W: case ConsoleKey.UpArrow: y--; break;
+                    case ConsoleKey.S: case ConsoleKey.DownArrow: y++; break;
+                    case ConsoleKey.A: case ConsoleKey.LeftArrow: x--; break;
+                    case ConsoleKey.D: case ConsoleKey.RightArrow: x++; break;
+     
+                    default:
+                        Console.WriteLine("Error"); break;
+                }
+                if (x == 0) { x++; Console.Beep(); }
+                if (y == 0) { y++; Console.Beep(); }
+                if (x == Console.WindowWidth-1) { x--; Console.Beep(); }
+                if (y == Console.WindowHeight-1) { y--; Console.Beep(); }
+            } while (key != ConsoleKey.Escape);
+
+
+
+
+
+
+
+
+
+
+
+
         }
     }
 }
